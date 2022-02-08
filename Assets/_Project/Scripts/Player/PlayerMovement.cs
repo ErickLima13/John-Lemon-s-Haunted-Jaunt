@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] [Range(0,20)] private float turnSpeed;
     
-
     private void Initialization()
     {
         m_Animator = GetComponent<Animator>();

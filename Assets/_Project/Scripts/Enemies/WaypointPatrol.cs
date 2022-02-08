@@ -20,8 +20,7 @@ public class WaypointPatrol : MonoBehaviour
     {
         Initialization();
     }
-
-    
+        
     void Update()
     {
         if(navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
