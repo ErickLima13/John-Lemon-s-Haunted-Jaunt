@@ -4446,7 +4446,6 @@ GameObject:
   m_Component:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
-  - component: {fileID: 963194226}
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
   m_Layer: 0
@@ -4456,14 +4455,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &963194226
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
 --- !u!20 &963194227
 Camera:
   m_ObjectHideFlags: 0
@@ -5840,6 +5831,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 562987492}
     m_Modifications:
+    - target: {fileID: 2138478615818140909, guid: 8b13b44302396ac44b90f52b5b2915d8,
+        type: 3}
+      propertyPath: MinDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2138478615818140909, guid: 8b13b44302396ac44b90f52b5b2915d8,
+        type: 3}
+      propertyPath: rolloffMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5050920027745596165, guid: 8b13b44302396ac44b90f52b5b2915d8,
         type: 3}
       propertyPath: player
