@@ -12,6 +12,18 @@ public class PlayerMovement : MonoBehaviour
     private Quaternion m_Rotation = Quaternion.identity;
 
     [SerializeField] [Range(0,20)] private float turnSpeed;
+
+    private Vector3 target;
+
+    private RaycastHit hit;
+
+    [Range(0, 20)] public float speed;
+
+    public bool isMoving;
+
+    public bool isMouse;
+
+    public int index;
     
     private void Initialization()
     {
@@ -29,14 +41,79 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Movement();
-        Rotation();
+        SetControls(index);
+    }
+
+    public void SetControls(int i)
+    {
+        index = i;
+
+        switch (i)
+        {
+            case 0:
+                Movement();
+                Rotation();
+                isMouse = false;
+                break;
+            case 1:
+                MoveWithMouse();
+                isMouse = true;
+                break;
+        }
     }
 
     private void OnAnimatorMove()
     {
-        m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
-        m_Rigidbody.MoveRotation(m_Rotation);
+        if (!isMouse)
+        {
+            m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
+            m_Rigidbody.MoveRotation(m_Rotation);
+        }
+    }
+
+    private void MoveWithMouse()
+    {
+        isMoving = Input.GetKey(KeyCode.Mouse0);
+
+        m_Animator.SetBool("isWalking", isMoving);
+
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100);
+            if (hit.transform != null)
+            {
+                target = hit.point;
+                
+            }
+        }
+
+        Quaternion look = Quaternion.LookRotation(target - transform.position);
+        look.x = 0;
+        look.z = 0;
+        transform.rotation = Quaternion.Slerp(transform.rotation, look, 10 * Time.deltaTime);
+
+
+        if ((target - transform.position).magnitude >= 1.5f)
+        {
+            m_Rigidbody.velocity = transform.forward * speed;
+            
+        }
+        else
+        {
+            m_Rigidbody.velocity = Vector3.zero;
+        }
+
+        if (isMoving)
+        {
+            if (!m_AudioSource.isPlaying)
+            {
+                m_AudioSource.Play();
+            }
+        }
+        else
+        {
+            m_AudioSource.Stop();
+        }
     }
 
     private void Movement()
